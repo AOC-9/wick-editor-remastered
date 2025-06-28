@@ -24,7 +24,16 @@ import WickColorPicker  from 'Editor/Util/ColorPicker/WickColorPicker';
 import './_colorpicker.scss';
 
 export default function ColorPicker (props) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); 
+  
+  const [colorMode, setColorMode] = useState('solid'); // solid | gradient
+const [gradientType, setGradientType] = useState('linear'); // linear | radial
+const [gradientAngle, setGradientAngle] = useState(90); // Only for linear
+const [gradientStops, setGradientStops] = useState([
+  { offset: 0, color: '#ff0000' },
+  { offset: 1, color: '#0000ff' }
+]);
+const [target, setTarget] = useState('fill'); // fill | stroke | background
 
   let color = props.color ? props.color : new window.Wick.Color("#FFFFFF")
   let itemID = props.id;
