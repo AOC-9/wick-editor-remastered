@@ -35,6 +35,16 @@ const [gradientStops, setGradientStops] = useState([
 ]);
 const [target, setTarget] = useState('fill'); // fill | stroke | background
 
+function getGradientCSS() {
+  if (colorMode === 'solid') return gradientStops[0].color;
+  const stops = gradientStops.map(s => `${s.color} ${s.offset * 100}%`).join(', ');
+  if (gradientType === 'linear') {
+    return `linear-gradient(${gradientAngle}deg, ${stops})`;
+  }
+  if (gradientType === 'radial') {
+    return `radial-gradient(circle, ${stops})`;
+  }
+}  
   let color = props.color ? props.color : new window.Wick.Color("#FFFFFF")
   let itemID = props.id;
   let popoverID = itemID+'-popover';
