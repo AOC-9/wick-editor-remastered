@@ -79,6 +79,61 @@ const [target, setTarget] = useState('fill'); // fill | stroke | background
               onChangeComplete={props.onChangeComplete}
               lastColorsUsed={props.lastColorsUsed}
             />
+            {<div className="colorpicker-panel-tabs">
+  <button onClick={() => setColorMode('solid')} className={colorMode === 'solid' ? 'active' : ''}>Solid</button>
+  <button onClick={() => setColorMode('gradient')} className={colorMode === 'gradient' ? 'active' : ''}>Gradient</button>
+</div>
+
+{colorMode === 'solid' && (
+  /* ...your existing solid color picker controls... */
+)}
+
+{colorMode === 'gradient' && (
+  <div className="gradient-panel">
+    <label>
+      Target:
+      <select value={target} onChange={e => setTarget(e.target.value)}>
+        <option value="fill">Fill</option>
+        <option value="stroke">Stroke</option>
+        <option value="background">Background</option>
+      </select>
+    </label>
+    <label>
+      Type:
+      <select value={gradientType} onChange={e => setGradientType(e.target.value)}>
+        <option value="linear">Linear</option>
+        <option value="radial">Radial</option>
+      </select>
+    </label>
+    {gradientType === 'linear' && (
+      <label>
+        Angle:
+        <input type="number" value={gradientAngle}
+          onChange={e => setGradientAngle(Number(e.target.value))} />
+      </label>
+    )}
+    <div className="gradient-stops">
+      {gradientStops.map((stop, idx) => (
+        <div key={idx}>
+          <input
+            type="color"
+            value={stop.color}
+            onChange={e => {
+              const newStops = [...gradientStops];
+              newStops[idx].color = e.target.value;
+              setGradientStops(newStops);
+            }}
+          />
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            value={stop.offset}
+            onChange={e => {
+              const newStops = [...gradientStops];
+              newStops[idx].offset = parseFloat(e.target.value);
+              setGradientStops(
           </Popover>
       </button>
   )
